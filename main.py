@@ -1,20 +1,15 @@
-import asyncio
-from aiogram import Bot, Dispatcher
+import telebot
 from config import load_config
-from aiogram.fsm.storage.memory import MemoryStorage
-from handlers import register_routers
-from utils.set_menu_commands import set_menu_commands
 
-async def main():
+def main():
     config = load_config()
-    bot = Bot(token=config.BOT_TOKEN)
-    dp = Dispatcher(storage=MemoryStorage())
+    bot = telebot.TeleBot(config.BOT_TOKEN)
 
-    register_routers(dp)
-    await set_menu_commands(bot)
+    from handlers import register_handlers
+    register_handlers(bot)
 
     print("Bot is running...")
-    await dp.start_polling(bot)
+    bot.polling(none_stop=True)
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

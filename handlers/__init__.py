@@ -1,7 +1,6 @@
-from aiogram import Dispatcher
-from .start import router as start_router
-from .capture import router as capture_router
+from .start import register_start_handler
+from .capture_ics import register_capture_handler
 
-def register_routers(dp: Dispatcher):
-    dp.include_router(start_router)
-    dp.include_router(capture_router)
+def register_handlers(bot):
+    register_start_handler(bot)
+    register_capture_handler(bot)
